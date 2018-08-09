@@ -24,7 +24,7 @@
 #define AP_SSID "neato"
 
 #define FIRMWARE "1.7"
-
+#define HOSTNAME "botvac-wifi"
 #define MAX_BUFFER 8192
 
 String readString;
@@ -41,7 +41,7 @@ WiFiClient client;
 int bufferSize = 0;
 uint8_t currentClient = 0;
 uint8_t serialBuffer[8193];
-ESP8266WebServer server = ESP8266WebServer(80);
+ESP8266WebServer server (80);
 WebSocketsServer webSocket = WebSocketsServer(81);
 ESP8266WebServer updateServer(82);
 ESP8266HTTPUpdateServer httpUpdater;
@@ -412,6 +412,7 @@ void setup() {
     // attempt station connection
     WiFi.disconnect();
     WiFi.mode(WIFI_STA);
+    WiFi.hostname(HOSTNAME);
     WiFi.begin(ssid, passwd);
     for(int i = 0; i < CONNECT_TIMEOUT_SECS * 20 && WiFi.status() != WL_CONNECTED; i++) {
       delay(50);
